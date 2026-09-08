@@ -131,31 +131,4 @@ tools:
       scripts: ["vuln"]
 ```
 
-## Pushing this project to GitHub (from Windows/VS Code)
 
-```bash
-git init
-git add .
-git commit -m "Initial commit: reconorch scan orchestrator"
-git branch -M main
-git remote add origin https://github.com/<your-username>/reconorch.git
-git push -u origin main
-```
-
-Notes for Windows → Linux round-trips:
-- `.gitattributes` in this repo forces LF line endings, so files you edit in
-  VS Code on Windows won't break when run on Kali.
-- `.gitignore` excludes `venv/`, `results.db`, and your real `config.yaml`
-  (only `config.example.yaml` is tracked) — don't commit real target lists
-  or scan data to a public repo.
-- If you ever add a `.sh` script, run `chmod +x script.sh` on Linux after
-  cloning — Git on Windows doesn't preserve the executable bit.
-
-## Adding a new tool (e.g. amass, subfinder, sqlmap)
-
-1. Create `reconorch/tools/yourtool_adapter.py`, subclass `ToolAdapter`,
-   implement `build_command()` (return an argv list) and `parse_output()`.
-2. Add an entry to `config.yaml` under `tools:` pointing `adapter:` at the
-   dotted path of your new class.
-3. Done — the orchestrator, scheduler, and storage all work with it
-   automatically.
