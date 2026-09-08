@@ -1,0 +1,38 @@
+# Example configuration for cyberorch.
+# Copy to config.yaml and edit targets to match systems you own or are
+# explicitly authorized to test.
+
+ray_address: null       # null = local Ray on this machine; or "auto" / "ray://host:10001" for a cluster
+max_concurrent: 4       # how many scans can run at once locally
+db_path: "results.db"
+
+targets:
+  - name: "local-test"
+    host: "127.0.0.1"          # replace with an authorized target
+    tags: ["lab"]
+
+tools:
+  - name: "nmap-quick"
+    adapter: "cyberorch.tools.nmap_adapter.NmapAdapter"
+    enabled: true
+    interval_seconds: null      # null = run once; set e.g. 3600 for hourly
+    args:
+      ports: "1-1000"
+      flags: ["-sV", "-T4"]
+      scripts: ["default"]      # NSE script category or names, e.g. ["vuln"]
+
+  - name: "nikto-web"
+    adapter: "cyberorch.tools.nikto_adapter.NiktoAdapter"
+    enabled: true
+    interval_seconds: 86400     # once a day
+    args:
+      scheme: "http"
+
+  - name: "gobuster-dirs"
+    adapter: "cyberorch.tools.gobuster_adapter.GobusterAdapter"
+    enabled: true
+    interval_seconds: null
+    args:
+      mode: "dir"
+      scheme: "http"
+      wordlist: "/usr/share/wordlists/dirb/common.txt"
