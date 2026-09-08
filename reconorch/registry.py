@@ -10,7 +10,7 @@ from .tools.base import ToolAdapter
 
 def resolve_adapter(dotted_path: str) -> type[ToolAdapter]:
     """
-    dotted_path example: "cyberorch.tools.nmap_adapter.NmapAdapter"
+    dotted_path example: "reconorch.tools.nmap_adapter.NmapAdapter"
     """
     module_path, _, class_name = dotted_path.rpartition(".")
     if not module_path:

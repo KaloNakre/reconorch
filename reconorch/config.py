@@ -20,7 +20,7 @@ class TargetConfig:
 @dataclasses.dataclass
 class ToolConfig:
     name: str
-    adapter: str                 # dotted path to ToolAdapter subclass, e.g. "cyberorch.tools.nmap.NmapAdapter"
+    adapter: str                 # dotted path to ToolAdapter subclass, e.g. "reconorch.tools.nmap_adapter.NmapAdapter"
     enabled: bool = True
     interval_seconds: int | None = None   # None = run once, int = repeat every N seconds
     args: dict[str, Any] = dataclasses.field(default_factory=dict)

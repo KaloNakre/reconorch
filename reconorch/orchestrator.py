@@ -18,7 +18,7 @@ from .registry import resolve_adapter
 from .storage import ResultStore
 from .tools.base import ScanResult
 
-logger = logging.getLogger("cyberorch.orchestrator")
+logger = logging.getLogger("reconorch.orchestrator")
 
 
 @ray.remote

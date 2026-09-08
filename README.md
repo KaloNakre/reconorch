@@ -1,4 +1,6 @@
-# cyberorch
+![Reconorch Banner](banner.png)
+
+# Reconorch
 
 A small, extensible orchestrator for CLI security scanning tools (nmap, nikto,
 gobuster, and anything else you wrap as an "adapter"). Runs scans in parallel
@@ -12,15 +14,15 @@ target names or args).
 
 ## What's included
 
-- `cyberorch/tools/base.py` — `ToolAdapter` base class: any CLI tool becomes
+- `reconorch/tools/base.py` — `ToolAdapter` base class: any CLI tool becomes
   an adapter by implementing `build_command()` and `parse_output()`.
-- `cyberorch/tools/nmap_adapter.py` — nmap, including NSE script support
+- `reconorch/tools/nmap_adapter.py` — nmap, including NSE script support
   (`scripts: ["vuln"]` in config).
-- `cyberorch/tools/nikto_adapter.py`, `gobuster_adapter.py` — example adapters.
-- `cyberorch/orchestrator.py` — Ray-based parallel execution across targets.
-- `cyberorch/scheduler.py` — continuous mode, per-tool interval.
-- `cyberorch/storage.py` — SQLite result history.
-- `cyberorch/cli.py` — `cyberorch scan / watch / results / check-tools`.
+- `reconorch/tools/nikto_adapter.py`, `gobuster_adapter.py` — example adapters.
+- `reconorch/orchestrator.py` — Ray-based parallel execution across targets.
+- `reconorch/scheduler.py` — continuous mode, per-tool interval.
+- `reconorch/storage.py` — SQLite result history.
+- `reconorch/cli.py` — `reconorch scan / watch / results / check-tools`.
 
 ## Install on Kali Linux (or any Debian-based distro)
 
@@ -30,8 +32,8 @@ sudo apt update
 sudo apt install -y nmap nikto gobuster
 
 # 2. Clone your repo (after you've pushed it to GitHub — see below)
-git clone https://github.com/<your-username>/cyberorch.git
-cd cyberorch
+git clone https://github.com/<your-username>/reconorch.git
+cd reconorch
 
 # 3. Python virtual environment (recommended, keeps deps isolated)
 python3 -m venv venv
@@ -46,16 +48,16 @@ cp config.example.yaml config.yaml
 nano config.yaml   # or vim/your editor
 
 # 6. Check which required binaries are actually on PATH
-cyberorch check-tools --config config.yaml
+reconorch check-tools --config config.yaml
 
 # 7. Run every enabled tool once
-cyberorch scan --config config.yaml
+reconorch scan --config config.yaml
 
 # 8. Or run continuously per each tool's configured interval
-cyberorch watch --config config.yaml
+reconorch watch --config config.yaml
 
 # 9. View saved results any time
-cyberorch results --config config.yaml
+reconorch results --config config.yaml
 ```
 
 Kali ships `gobuster` and `nmap` in its default repos; `nikto` too. If any
@@ -73,8 +75,8 @@ sudo apt install -y nmap nikto gobuster
 ### 2. Clone and install this project
 
 ```bash
-git clone https://github.com/<your-username>/cyberorch.git
-cd cyberorch
+git clone https://github.com/<your-username>/reconorch.git
+cd reconorch
 python3 -m venv venv
 source venv/bin/activate
 pip install -e .
@@ -93,27 +95,27 @@ have explicit written permission to test.
 ### 4. Check that required tools are installed
 
 ```bash
-cyberorch check-tools --config config.yaml
+reconorch check-tools --config config.yaml
 ```
 
 ### 5. Run a scan
 
 ```bash
 # Run every enabled tool once
-cyberorch scan --config config.yaml
+reconorch scan --config config.yaml
 
 # Run just one tool
-cyberorch scan --config config.yaml --tool nmap-quick
+reconorch scan --config config.yaml --tool nmap-quick
 
 # Run continuously on each tool's configured interval
-cyberorch watch --config config.yaml
+reconorch watch --config config.yaml
 ```
 
 ### 6. View results
 
 ```bash
-cyberorch results --config config.yaml
-cyberorch results --config config.yaml --tool nmap --target local-test
+reconorch results --config config.yaml
+reconorch results --config config.yaml --tool nmap --target local-test
 ```
 
 ### Example: enabling Nmap NSE scripts
@@ -121,7 +123,7 @@ cyberorch results --config config.yaml --tool nmap --target local-test
 ```yaml
 tools:
   - name: "nmap-vuln-scan"
-    adapter: "cyberorch.tools.nmap_adapter.NmapAdapter"
+    adapter: "reconorch.tools.nmap_adapter.NmapAdapter"
     enabled: true
     args:
       ports: "1-1000"
@@ -134,9 +136,9 @@ tools:
 ```bash
 git init
 git add .
-git commit -m "Initial commit: cyberorch scan orchestrator"
+git commit -m "Initial commit: reconorch scan orchestrator"
 git branch -M main
-git remote add origin https://github.com/<your-username>/cyberorch.git
+git remote add origin https://github.com/<your-username>/reconorch.git
 git push -u origin main
 ```
 
@@ -151,16 +153,9 @@ Notes for Windows → Linux round-trips:
 
 ## Adding a new tool (e.g. amass, subfinder, sqlmap)
 
-1. Create `cyberorch/tools/yourtool_adapter.py`, subclass `ToolAdapter`,
+1. Create `reconorch/tools/yourtool_adapter.py`, subclass `ToolAdapter`,
    implement `build_command()` (return an argv list) and `parse_output()`.
 2. Add an entry to `config.yaml` under `tools:` pointing `adapter:` at the
    dotted path of your new class.
 3. Done — the orchestrator, scheduler, and storage all work with it
    automatically.
-
-## Project roadmap (see chat for full details)
-
-This is "Project 1" in a 10-project learning path: basic multi-tool
-automation → scheduling → phase-chained recon → notifications → reporting →
-Docker packaging → distributed multi-machine Ray → AI-assisted findings
-triage → web dashboard → LLM/AI-endpoint security testing module.

@@ -25,7 +25,7 @@ class NmapAdapter(ToolAdapter):
         # config example:
         #   args:
         #     scripts: ["default", "vuln"]        # script categories or names
-        #     script_args: {"http.useragent": "cyberorch"}   # optional --script-args
+        #     script_args: {"http.useragent": "reconorch"}   # optional --script-args
         scripts = self.args.get("scripts")
         if scripts:
             cmd.insert(1, f"--script={','.join(scripts)}")

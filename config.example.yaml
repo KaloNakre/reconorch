@@ -1,4 +1,4 @@
-# Example configuration for cyberorch.
+# Example configuration for Reconorch.
 # Copy to config.yaml and edit targets to match systems you own or are
 # explicitly authorized to test.
 
@@ -13,7 +13,7 @@ targets:
 
 tools:
   - name: "nmap-quick"
-    adapter: "cyberorch.tools.nmap_adapter.NmapAdapter"
+    adapter: "reconorch.tools.nmap_adapter.NmapAdapter"
     enabled: true
     interval_seconds: null      # null = run once; set e.g. 3600 for hourly
     args:
@@ -22,14 +22,14 @@ tools:
       scripts: ["default"]      # NSE script category or names, e.g. ["vuln"]
 
   - name: "nikto-web"
-    adapter: "cyberorch.tools.nikto_adapter.NiktoAdapter"
+    adapter: "reconorch.tools.nikto_adapter.NiktoAdapter"
     enabled: true
     interval_seconds: 86400     # once a day
     args:
       scheme: "http"
 
   - name: "gobuster-dirs"
-    adapter: "cyberorch.tools.gobuster_adapter.GobusterAdapter"
+    adapter: "reconorch.tools.gobuster_adapter.GobusterAdapter"
     enabled: true
     interval_seconds: null
     args:

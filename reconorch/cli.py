@@ -2,11 +2,11 @@
 Command-line entry point.
 
 Usage:
-    cyberorch scan --config config.yaml            # run every enabled tool once
-    cyberorch scan --config config.yaml --tool nmap  # run just one tool once
-    cyberorch watch --config config.yaml            # continuous mode, runs forever
-    cyberorch results --config config.yaml --tool nmap --target myserver
-    cyberorch check-tools --config config.yaml       # verify binaries are on PATH
+    reconorch scan --config config.yaml            # run every enabled tool once
+    reconorch scan --config config.yaml --tool nmap  # run just one tool once
+    reconorch watch --config config.yaml            # continuous mode, runs forever
+    reconorch results --config config.yaml --tool nmap --target myserver
+    reconorch check-tools --config config.yaml       # verify binaries are on PATH
 """
 from __future__ import annotations
 
@@ -21,14 +21,13 @@ from .registry import resolve_adapter
 from .scheduler import Scheduler
 
 BANNER = r"""
-   ______      __              ____             __
-  / ____/_  __/ /_  ___  _____/ __ \_________  / /_
- / /   / / / / __ \/ _ \/ ___/ / / / ___/ __ \/ __ \
-/ /___/ /_/ / /_/ /  __/ /  / /_/ / /__/ / / / / / /
-\____/\__, /_.___/\___/_/  /_____/\___/_/ /_/_/ /_/
-     /____/
+    ____                           ____             __
+   / __ \___  _________  ____  ___/ __ \_________  / /_
+  / /_/ / _ \/ ___/ __ \/ __ \/ _/ / / / ___/ __ \/ __ \
+ / _, _/  __/ /__/ /_/ / / / /  / /_/ / /__/ / / / / / /
+/_/ |_|\___/\___/\____/_/ /_/__/\____/\___/_/ /_/_/ /_/
 
-Authorized security testing automation. Only scan targets you own or
+Reconorch security testing automation. Only scan targets you own or
 have explicit written permission to test.
 """
 
@@ -93,7 +92,7 @@ def cmd_check_tools(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="cyberorch", description="Security scan orchestrator")
+    parser = argparse.ArgumentParser(prog="reconorch", description="Security scan orchestrator")
     parser.add_argument("-v", "--verbose", action="store_true")
     sub = parser.add_subparsers(dest="command", required=True)
 

@@ -13,7 +13,7 @@ import time
 from .config import ToolConfig
 from .orchestrator import Orchestrator
 
-logger = logging.getLogger("cyberorch.scheduler")
+logger = logging.getLogger("reconorch.scheduler")
 
 
 class Scheduler:
